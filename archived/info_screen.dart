@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../core/constants/app_colors.dart';
-import '../../../routes/app_routes.dart';
+import '../lib/core/constants/app_colors.dart';
+import '../lib/routes/app_routes.dart';
 
 /// Information screen about Lund & Browder method - Step 2
 class InfoScreen extends StatelessWidget {

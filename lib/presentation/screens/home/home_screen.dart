@@ -184,7 +184,7 @@ class HomeScreen extends StatelessWidget {
                       onPressed: () {
                         // Reset calculation state before starting
                         context.read<CalculationProvider>().reset();
-                        Navigator.pushNamed(context, AppRoutes.ageSelection);
+                        Navigator.pushNamed(context, AppRoutes.calculationFlow);
                       },
                     ),
 

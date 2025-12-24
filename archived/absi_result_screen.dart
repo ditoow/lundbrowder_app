@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../core/constants/app_colors.dart';
-import '../../../core/constants/absi_constants.dart';
-import '../../../providers/calculation_provider.dart';
-import '../../../routes/app_routes.dart';
+import '../lib/core/constants/app_colors.dart';
+import '../lib/core/constants/absi_constants.dart';
+import '../lib/providers/calculation_provider.dart';
+import '../lib/routes/app_routes.dart';
 
 /// ABSI Score result screen
 class AbsiResultScreen extends StatelessWidget {

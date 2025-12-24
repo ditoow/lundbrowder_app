@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../core/constants/app_colors.dart';
-import '../../../core/constants/burn_percentages.dart';
-import '../../../providers/calculation_provider.dart';
-import '../../../routes/app_routes.dart';
+import '../../../../core/constants/app_colors.dart';
+import '../../../../core/constants/burn_percentages.dart';
+import '../../../../providers/calculation_provider.dart';
 
-/// Age selection screen with 2 main options: Dewasa and Anak
-class AgeSelectionScreen extends StatelessWidget {
-  const AgeSelectionScreen({super.key});
+/// Age Selection Page - can be used directly in PageView
+class AgeSelectionPage extends StatelessWidget {
+  final VoidCallback onNext;
+
+  const AgeSelectionPage({super.key, required this.onNext});
 
   void _showChildAgeModal(BuildContext context, CalculationProvider provider) {
     showModalBottomSheet(
@@ -15,182 +16,6 @@ class AgeSelectionScreen extends StatelessWidget {
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
       builder: (context) => _ChildAgeModal(provider: provider),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.textPrimary),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: const Text(
-          'Pilih Usia Pasien',
-          style: TextStyle(
-            color: AppColors.textPrimary,
-            fontWeight: FontWeight.w600,
-            fontSize: 18,
-          ),
-        ),
-        centerTitle: true,
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1),
-          child: Container(color: Colors.grey.shade200, height: 1),
-        ),
-      ),
-      body: Column(
-        children: [
-          // Sticky step indicator
-          Container(
-            color: Colors.white,
-            padding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
-            child: _StepIndicator(currentStep: 1, totalSteps: 5),
-          ),
-
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
-              child: Column(
-                children: [
-                  // Age options - hanya 2: Dewasa dan Anak
-                  Consumer<CalculationProvider>(
-                    builder: (context, provider, _) {
-                      final isAdultSelected =
-                          provider.selectedAgeGroup == AgeGroup.adult;
-                      final isChildSelected =
-                          provider.selectedAgeGroup != null &&
-                          provider.selectedAgeGroup != AgeGroup.adult;
-
-                      return Column(
-                        children: [
-                          // Dewasa option
-                          _MainAgeOptionCard(
-                            title: 'Dewasa',
-                            subtitle: '> 15 Tahun',
-                            icon: Icons.person,
-                            iconColor: AppColors.primary,
-                            isSelected: isAdultSelected,
-                            onTap: () =>
-                                provider.selectAgeGroup(AgeGroup.adult),
-                          ),
-                          const SizedBox(height: 16),
-                          // Anak option
-                          _MainAgeOptionCard(
-                            title: 'Anak',
-                            subtitle: isChildSelected
-                                ? _getChildAgeLabel(provider.selectedAgeGroup!)
-                                : '≤ 15 Tahun',
-                            icon: Icons.child_care,
-                            iconColor: Colors.orange,
-                            isSelected: isChildSelected,
-                            showArrow: true,
-                            onTap: () => _showChildAgeModal(context, provider),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-
-                  const SizedBox(height: 24),
-
-                  // Info box
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade50,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(6),
-                          decoration: BoxDecoration(
-                            color: AppColors.primary.withAlpha(25),
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(
-                            Icons.info_outline,
-                            color: AppColors.primary,
-                            size: 18,
-                          ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: Text(
-                            'Pemilihan kategori usia akan menentukan persentase luas area tubuh berdasarkan standar Chart Lund & Browder.',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: AppColors.textSecondary,
-                              height: 1.5,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          // Bottom button
-          Container(
-            padding: const EdgeInsets.all(24),
-            child: Consumer<CalculationProvider>(
-              builder: (context, provider, _) {
-                final isEnabled = provider.hasAgeSelected;
-                return SizedBox(
-                  width: double.infinity,
-                  height: 56,
-                  child: ElevatedButton(
-                    onPressed: isEnabled
-                        ? () => Navigator.pushNamed(context, AppRoutes.info)
-                        : null,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      disabledBackgroundColor: Colors.grey.shade300,
-                      foregroundColor: Colors.white,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Lanjut',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: isEnabled
-                                ? Colors.white
-                                : Colors.grey.shade500,
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Icon(
-                          Icons.arrow_forward,
-                          size: 20,
-                          color: isEnabled
-                              ? Colors.white
-                              : Colors.grey.shade500,
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
     );
   }
 
@@ -210,9 +35,146 @@ class AgeSelectionScreen extends StatelessWidget {
         return '≤ 15 Tahun';
     }
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return Consumer<CalculationProvider>(
+      builder: (context, provider, _) {
+        final isAdultSelected = provider.selectedAgeGroup == AgeGroup.adult;
+        final isChildSelected =
+            provider.selectedAgeGroup != null &&
+            provider.selectedAgeGroup != AgeGroup.adult;
+
+        return Column(
+          children: [
+            // Step indicator
+            Container(
+              color: Colors.white,
+              padding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
+              child: _StepIndicator(currentStep: 1, totalSteps: 5),
+            ),
+
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
+                child: Column(
+                  children: [
+                    // Dewasa option
+                    _MainAgeOptionCard(
+                      title: 'Dewasa',
+                      subtitle: '> 15 Tahun',
+                      icon: Icons.person,
+                      iconColor: AppColors.primary,
+                      isSelected: isAdultSelected,
+                      onTap: () => provider.selectAgeGroup(AgeGroup.adult),
+                    ),
+                    const SizedBox(height: 16),
+                    // Anak option
+                    _MainAgeOptionCard(
+                      title: 'Anak',
+                      subtitle: isChildSelected
+                          ? _getChildAgeLabel(provider.selectedAgeGroup!)
+                          : '≤ 15 Tahun',
+                      icon: Icons.child_care,
+                      iconColor: Colors.orange,
+                      isSelected: isChildSelected,
+                      showArrow: true,
+                      onTap: () => _showChildAgeModal(context, provider),
+                    ),
+                    const SizedBox(height: 24),
+                    // Info box
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade50,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(6),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary.withAlpha(25),
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              Icons.info_outline,
+                              color: AppColors.primary,
+                              size: 18,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              'Pemilihan kategori usia akan menentukan persentase luas area tubuh berdasarkan standar Chart Lund & Browder.',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: AppColors.textSecondary,
+                                height: 1.5,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // Bottom button
+            Container(
+              padding: const EdgeInsets.all(24),
+              child: SizedBox(
+                width: double.infinity,
+                height: 56,
+                child: ElevatedButton(
+                  onPressed: provider.hasAgeSelected ? onNext : null,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    disabledBackgroundColor: Colors.grey.shade300,
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Lanjut',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: provider.hasAgeSelected
+                              ? Colors.white
+                              : Colors.grey.shade500,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Icon(
+                        Icons.arrow_forward,
+                        size: 20,
+                        color: provider.hasAgeSelected
+                            ? Colors.white
+                            : Colors.grey.shade500,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
 
-/// Step indicator widget
+// ==================== WIDGETS ====================
+
 class _StepIndicator extends StatelessWidget {
   final int currentStep;
   final int totalSteps;
@@ -223,7 +185,6 @@ class _StepIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Progress bar
         Row(
           children: List.generate(totalSteps, (index) {
             final isActive = index < currentStep;
@@ -254,7 +215,6 @@ class _StepIndicator extends StatelessWidget {
   }
 }
 
-/// Main age option card (Dewasa / Anak)
 class _MainAgeOptionCard extends StatelessWidget {
   final String title;
   final String subtitle;
@@ -291,7 +251,6 @@ class _MainAgeOptionCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            // Icon
             Container(
               width: 56,
               height: 56,
@@ -302,7 +261,6 @@ class _MainAgeOptionCard extends StatelessWidget {
               child: Icon(icon, color: iconColor, size: 28),
             ),
             const SizedBox(width: 16),
-            // Text
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -331,7 +289,6 @@ class _MainAgeOptionCard extends StatelessWidget {
                 ],
               ),
             ),
-            // Radio or Arrow
             if (showArrow)
               Icon(
                 Icons.chevron_right,
@@ -371,7 +328,6 @@ class _MainAgeOptionCard extends StatelessWidget {
   }
 }
 
-/// Modal for selecting child age
 class _ChildAgeModal extends StatelessWidget {
   final CalculationProvider provider;
 
@@ -387,7 +343,6 @@ class _ChildAgeModal extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Handle bar
           Container(
             margin: const EdgeInsets.only(top: 12),
             width: 40,
@@ -397,8 +352,6 @@ class _ChildAgeModal extends StatelessWidget {
               borderRadius: BorderRadius.circular(2),
             ),
           ),
-
-          // Title
           Padding(
             padding: const EdgeInsets.fromLTRB(24, 20, 24, 16),
             child: Row(
@@ -427,8 +380,6 @@ class _ChildAgeModal extends StatelessWidget {
               ],
             ),
           ),
-
-          // Age options
           Padding(
             padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
             child: Column(
@@ -495,8 +446,6 @@ class _ChildAgeModal extends StatelessWidget {
               ],
             ),
           ),
-
-          // Safe area padding
           SizedBox(height: MediaQuery.of(context).padding.bottom),
         ],
       ),
@@ -504,7 +453,6 @@ class _ChildAgeModal extends StatelessWidget {
   }
 }
 
-/// Child age option item
 class _ChildAgeOption extends StatelessWidget {
   final String title;
   final String subtitle;
@@ -539,7 +487,6 @@ class _ChildAgeOption extends StatelessWidget {
         ),
         child: Row(
           children: [
-            // Icon
             Container(
               width: 44,
               height: 44,
@@ -550,7 +497,6 @@ class _ChildAgeOption extends StatelessWidget {
               child: Icon(icon, color: iconColor, size: 22),
             ),
             const SizedBox(width: 14),
-            // Text
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -573,7 +519,6 @@ class _ChildAgeOption extends StatelessWidget {
                 ],
               ),
             ),
-            // Checkmark
             if (isSelected)
               Container(
                 width: 24,

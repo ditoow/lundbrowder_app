@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../core/constants/app_colors.dart';
-import '../../../providers/calculation_provider.dart';
-import '../../../routes/app_routes.dart';
+import '../lib/core/constants/app_colors.dart';
+import '../lib/providers/calculation_provider.dart';
+import '../lib/routes/app_routes.dart';
 
 /// Result screen showing TBSA calculation - matching mockup
 class ResultScreen extends StatefulWidget {
