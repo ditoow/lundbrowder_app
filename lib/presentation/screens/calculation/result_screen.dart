@@ -5,8 +5,15 @@ import '../../../providers/calculation_provider.dart';
 import '../../../routes/app_routes.dart';
 
 /// Result screen showing TBSA calculation - matching mockup
-class ResultScreen extends StatelessWidget {
+class ResultScreen extends StatefulWidget {
   const ResultScreen({super.key});
+
+  @override
+  State<ResultScreen> createState() => _ResultScreenState();
+}
+
+class _ResultScreenState extends State<ResultScreen> {
+  bool _showAllAreas = false;
 
   Color _getSeverityColor(String severity) {
     switch (severity) {
@@ -21,15 +28,45 @@ class ResultScreen extends StatelessWidget {
     }
   }
 
-  /// Build calculation formula string like "6.5 + 2 + 4 + 4 = 16.5%"
-  // String _buildCalculationFormula(CalculationProvider provider) {
-  //   final percentages = provider.selectedAreas.map((area) {
-  //     return area.getPercentage(provider.selectedAgeGroup!);
-  //   }).toList();
+  List<Widget> _buildAreasList(CalculationProvider provider) {
+    final areas = _showAllAreas
+        ? provider.selectedAreas
+        : provider.selectedAreas.take(3).toList();
 
-  //   final formula = percentages.map((p) => p.toStringAsFixed(1)).join(' + ');
-  //   return '$formula = ${provider.totalTBSA.toStringAsFixed(1)}%';
-  // }
+    return areas.map((area) {
+      final percentage = area.getPercentage(provider.selectedAgeGroup!);
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: Row(
+          children: [
+            Container(
+              width: 6,
+              height: 6,
+              decoration: BoxDecoration(
+                color: AppColors.primary,
+                shape: BoxShape.circle,
+              ),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Text(
+                area.displayName,
+                style: TextStyle(fontSize: 14, color: AppColors.textPrimary),
+              ),
+            ),
+            Text(
+              '${percentage.toStringAsFixed(1)}%',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: AppColors.textPrimary,
+              ),
+            ),
+          ],
+        ),
+      );
+    }).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +77,10 @@ class ResultScreen extends StatelessWidget {
         return Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
-            automaticallyImplyLeading: false,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () => Navigator.pop(context),
+            ),
             backgroundColor: Colors.white,
             elevation: 0,
             title: const Text(
@@ -198,45 +238,44 @@ class ResultScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 12),
 
-                      // List of selected areas
-                      ...provider.selectedAreas.map((area) {
-                        final percentage = area.getPercentage(
-                          provider.selectedAgeGroup!,
-                        );
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 4),
-                          child: Row(
-                            children: [
-                              Container(
-                                width: 6,
-                                height: 6,
-                                decoration: BoxDecoration(
-                                  color: AppColors.primary,
-                                  shape: BoxShape.circle,
-                                ),
-                              ),
-                              const SizedBox(width: 12),
-                              Expanded(
-                                child: Text(
-                                  area.displayName,
+                      // List of selected areas (max 3 or all)
+                      ..._buildAreasList(provider),
+
+                      // Show more button if more than 3 areas
+                      if (provider.selectedAreas.length > 3)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8),
+                          child: TextButton(
+                            onPressed: () {
+                              setState(() {
+                                _showAllAreas = !_showAllAreas;
+                              });
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  _showAllAreas
+                                      ? 'Sembunyikan'
+                                      : 'Tampilkan Semua (${provider.selectedAreas.length})',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color: AppColors.textPrimary,
+                                    color: AppColors.primary,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                              ),
-                              Text(
-                                '${percentage.toStringAsFixed(1)}%',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.textPrimary,
+                                const SizedBox(width: 4),
+                                Icon(
+                                  _showAllAreas
+                                      ? Icons.keyboard_arrow_up
+                                      : Icons.keyboard_arrow_down,
+                                  color: AppColors.primary,
+                                  size: 20,
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        );
-                      }),
+                        ),
                     ],
                   ),
                 ),
@@ -288,27 +327,14 @@ class ResultScreen extends StatelessWidget {
 
                 const SizedBox(height: 32),
 
-                // Recalculate button
+                // Continue to Parkland button
                 SizedBox(
                   width: double.infinity,
                   height: 56,
-                  child: ElevatedButton.icon(
+                  child: ElevatedButton(
                     onPressed: () {
-                      provider.reset();
-                      Navigator.pushNamedAndRemoveUntil(
-                        context,
-                        AppRoutes.ageSelection,
-                        ModalRoute.withName(AppRoutes.home),
-                      );
+                      Navigator.pushNamed(context, AppRoutes.parkland);
                     },
-                    icon: const Icon(Icons.refresh, size: 20),
-                    label: const Text(
-                      'Hitung Ulang',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       foregroundColor: Colors.white,
@@ -317,27 +343,19 @@ class ResultScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                  ),
-                ),
-
-                const SizedBox(height: 16),
-
-                // Back to home link
-                TextButton(
-                  onPressed: () {
-                    provider.reset();
-                    Navigator.pushNamedAndRemoveUntil(
-                      context,
-                      AppRoutes.home,
-                      (route) => false,
-                    );
-                  },
-                  child: Text(
-                    'Kembali ke Home',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: AppColors.primary,
-                      fontWeight: FontWeight.w500,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Text(
+                          'Lanjut ke Kebutuhan Cairan',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        Icon(Icons.arrow_forward, size: 20),
+                      ],
                     ),
                   ),
                 ),

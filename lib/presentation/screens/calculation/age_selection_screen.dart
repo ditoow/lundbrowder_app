@@ -49,7 +49,7 @@ class AgeSelectionScreen extends StatelessWidget {
           Container(
             color: Colors.white,
             padding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
-            child: _StepIndicator(currentStep: 1, totalSteps: 3),
+            child: _StepIndicator(currentStep: 1, totalSteps: 5),
           ),
 
           Expanded(

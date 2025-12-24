@@ -7,6 +7,9 @@ import '../presentation/screens/calculation/age_selection_screen.dart';
 import '../presentation/screens/calculation/info_screen.dart';
 import '../presentation/screens/calculation/burn_input_screen.dart';
 import '../presentation/screens/calculation/result_screen.dart';
+import '../presentation/screens/calculation/parkland_screen.dart';
+import '../presentation/screens/calculation/absi_screen.dart';
+import '../presentation/screens/calculation/absi_result_screen.dart';
 
 /// App route names
 class AppRoutes {
@@ -18,6 +21,9 @@ class AppRoutes {
   static const String info = '/info';
   static const String burnInput = '/burn-input';
   static const String result = '/result';
+  static const String parkland = '/parkland';
+  static const String absi = '/absi';
+  static const String absiResult = '/absi-result';
 
   /// Generate route based on settings
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -38,6 +44,12 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => const BurnInputScreen());
       case result:
         return MaterialPageRoute(builder: (_) => const ResultScreen());
+      case parkland:
+        return MaterialPageRoute(builder: (_) => const ParklandScreen());
+      case absi:
+        return MaterialPageRoute(builder: (_) => const AbsiScreen());
+      case absiResult:
+        return MaterialPageRoute(builder: (_) => const AbsiResultScreen());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
