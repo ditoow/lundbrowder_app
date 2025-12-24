@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/burn_percentages.dart';
@@ -28,42 +29,39 @@ class BurnInputPage extends StatelessWidget {
 
         return Column(
           children: [
-            // Step indicator
             Container(
               color: Colors.white,
-              padding: const EdgeInsets.fromLTRB(24, 16, 24, 8),
-              child: _StepIndicator(currentStep: 3, totalSteps: 5),
+              padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 8.h),
+              child: _StepIndicator(currentStep: 3, totalSteps: 7),
             ),
-
-            // Tab bar
             Container(
-              margin: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+              margin: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 0),
               decoration: BoxDecoration(
                 color: Colors.grey.shade100,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(12.r),
               ),
               child: TabBar(
                 controller: tabController,
                 indicator: BoxDecoration(
                   color: AppColors.primary,
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(10.r),
                 ),
                 indicatorSize: TabBarIndicatorSize.tab,
                 dividerColor: Colors.transparent,
                 labelColor: Colors.white,
                 unselectedLabelColor: AppColors.textSecondary,
-                labelStyle: const TextStyle(
+                labelStyle: TextStyle(
                   fontWeight: FontWeight.w600,
-                  fontSize: 14,
+                  fontSize: 14.sp,
                 ),
-                padding: const EdgeInsets.all(4),
+                padding: EdgeInsets.all(4.r),
                 tabs: [
                   Tab(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.person_outline, size: 20),
-                        const SizedBox(width: 8),
+                        Icon(Icons.person_outline, size: 20.r),
+                        SizedBox(width: 8.w),
                         const Text('DEPAN'),
                       ],
                     ),
@@ -72,8 +70,8 @@ class BurnInputPage extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.person, size: 20),
-                        const SizedBox(width: 8),
+                        Icon(Icons.person, size: 20.r),
+                        SizedBox(width: 8.w),
                         const Text('BELAKANG'),
                       ],
                     ),
@@ -81,8 +79,6 @@ class BurnInputPage extends StatelessWidget {
                 ],
               ),
             ),
-
-            // Body sections
             Expanded(
               child: TabBarView(
                 controller: tabController,
@@ -100,10 +96,8 @@ class BurnInputPage extends StatelessWidget {
                 ],
               ),
             ),
-
-            // Selected count
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
               decoration: BoxDecoration(
                 color: Colors.grey.shade50,
                 border: Border(top: BorderSide(color: Colors.grey.shade200)),
@@ -113,19 +107,17 @@ class BurnInputPage extends StatelessWidget {
                 child: Text(
                   '${provider.selectedAreas.length} area dipilih',
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 14.sp,
                     color: AppColors.textSecondary,
                   ),
                 ),
               ),
             ),
-
-            // Bottom button
             Container(
-              padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
+              padding: EdgeInsets.fromLTRB(24.w, 12.h, 24.w, 24.h),
               child: SizedBox(
                 width: double.infinity,
-                height: 56,
+                height: 56.h,
                 child: ElevatedButton(
                   onPressed: provider.selectedAreas.isNotEmpty
                       ? () {
@@ -139,13 +131,13 @@ class BurnInputPage extends StatelessWidget {
                     foregroundColor: Colors.white,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(12.r),
                     ),
                   ),
                   child: Text(
                     'Hitung Luas Luka',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 16.sp,
                       fontWeight: FontWeight.w600,
                       color: provider.selectedAreas.isNotEmpty
                           ? Colors.white
@@ -177,21 +169,23 @@ class _StepIndicator extends StatelessWidget {
             final isActive = index < currentStep;
             return Expanded(
               child: Container(
-                height: 4,
-                margin: EdgeInsets.only(right: index < totalSteps - 1 ? 4 : 0),
+                height: 4.h,
+                margin: EdgeInsets.only(
+                  right: index < totalSteps - 1 ? 4.w : 0,
+                ),
                 decoration: BoxDecoration(
                   color: isActive ? AppColors.primary : Colors.grey.shade200,
-                  borderRadius: BorderRadius.circular(2),
+                  borderRadius: BorderRadius.circular(2.r),
                 ),
               ),
             );
           }),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         Text(
           'LANGKAH $currentStep DARI $totalSteps',
           style: TextStyle(
-            fontSize: 12,
+            fontSize: 12.sp,
             fontWeight: FontWeight.w500,
             color: AppColors.textSecondary,
             letterSpacing: 0.5,
@@ -217,24 +211,24 @@ class _BodySection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          padding: const EdgeInsets.all(16),
+        Padding(
+          padding: EdgeInsets.all(16.r),
           child: Container(
-            height: 180,
+            height: 180.h,
             decoration: BoxDecoration(
               color: isFront
                   ? const Color(0xFFFFF8E1)
                   : const Color(0xFFD7CCC8),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(12.r),
               border: Border.all(color: Colors.grey.shade200),
             ),
             child: Center(
               child: Image.asset(
                 isFront ? 'assets/images/front.png' : 'assets/images/back.png',
-                height: 160,
+                height: 160.h,
                 errorBuilder: (context, error, stackTrace) => Icon(
                   isFront ? Icons.person_outline : Icons.person,
-                  size: 80,
+                  size: 80.r,
                   color: Colors.grey.shade400,
                 ),
               ),
@@ -242,13 +236,13 @@ class _BodySection extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
           child: Row(
             children: [
               Text(
                 isFront ? 'Area Tubuh Depan' : 'Area Tubuh Belakang',
-                style: const TextStyle(
-                  fontSize: 16,
+                style: TextStyle(
+                  fontSize: 16.sp,
                   fontWeight: FontWeight.w600,
                   color: AppColors.textPrimary,
                 ),
@@ -258,7 +252,7 @@ class _BodySection extends StatelessWidget {
                 onPressed: () => _selectAll(),
                 child: Text(
                   'Pilih Semua',
-                  style: TextStyle(fontSize: 12, color: AppColors.primary),
+                  style: TextStyle(fontSize: 12.sp, color: AppColors.primary),
                 ),
               ),
             ],
@@ -266,7 +260,7 @@ class _BodySection extends StatelessWidget {
         ),
         Expanded(
           child: ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
             itemCount: areas.length,
             itemBuilder: (context, index) {
               final area = areas[index];
@@ -313,15 +307,15 @@ class _BodyAreaCheckbox extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(8.r),
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        margin: const EdgeInsets.only(bottom: 4),
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+        margin: EdgeInsets.only(bottom: 4.h),
         decoration: BoxDecoration(
           color: isSelected
               ? AppColors.primary.withAlpha(10)
               : Colors.transparent,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(8.r),
           border: Border.all(
             color: isSelected ? AppColors.primary : Colors.grey.shade200,
           ),
@@ -335,7 +329,7 @@ class _BodyAreaCheckbox extends StatelessWidget {
                   Text(
                     title,
                     style: TextStyle(
-                      fontSize: 15,
+                      fontSize: 15.sp,
                       fontWeight: isSelected
                           ? FontWeight.w600
                           : FontWeight.normal,
@@ -348,7 +342,7 @@ class _BodyAreaCheckbox extends StatelessWidget {
                     Text(
                       '${percentage!.toStringAsFixed(2)}%',
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 12.sp,
                         color: isSelected
                             ? AppColors.primary
                             : AppColors.textSecondary,
@@ -358,18 +352,18 @@ class _BodyAreaCheckbox extends StatelessWidget {
               ),
             ),
             Container(
-              width: 24,
-              height: 24,
+              width: 24.r,
+              height: 24.r,
               decoration: BoxDecoration(
                 color: isSelected ? AppColors.primary : Colors.transparent,
-                borderRadius: BorderRadius.circular(6),
+                borderRadius: BorderRadius.circular(6.r),
                 border: Border.all(
                   color: isSelected ? AppColors.primary : Colors.grey.shade400,
                   width: 2,
                 ),
               ),
               child: isSelected
-                  ? const Icon(Icons.check, size: 16, color: Colors.white)
+                  ? Icon(Icons.check, size: 16.r, color: Colors.white)
                   : null,
             ),
           ],

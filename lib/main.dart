@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -31,20 +32,27 @@ class MyApp extends StatelessWidget {
           create: (_) => CalculationProvider(calculationRepository),
         ),
       ],
-      child: MaterialApp(
-        title: 'Lund & Browder Calculator',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: AppColors.primary,
-            brightness: Brightness.light,
-          ),
-          scaffoldBackgroundColor: AppColors.background,
-          fontFamily: GoogleFonts.poppins().fontFamily,
-          useMaterial3: true,
-        ),
-        initialRoute: AppRoutes.splash,
-        onGenerateRoute: AppRoutes.generateRoute,
+      child: ScreenUtilInit(
+        designSize: const Size(375, 812), // iPhone X design size
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (context, child) {
+          return MaterialApp(
+            title: 'Lund & Browder Calculator',
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: AppColors.primary,
+                brightness: Brightness.light,
+              ),
+              scaffoldBackgroundColor: AppColors.background,
+              fontFamily: GoogleFonts.poppins().fontFamily,
+              useMaterial3: true,
+            ),
+            initialRoute: AppRoutes.splash,
+            onGenerateRoute: AppRoutes.generateRoute,
+          );
+        },
       ),
     );
   }

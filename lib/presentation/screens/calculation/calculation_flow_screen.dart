@@ -5,11 +5,12 @@ import '../../../providers/calculation_provider.dart';
 import 'pages/age_selection_page.dart';
 import 'pages/info_page.dart';
 import 'pages/burn_input_page.dart';
+import 'pages/result_page.dart';
 import 'pages/parkland_page.dart';
 import 'pages/absi_page.dart';
 import 'pages/absi_result_page.dart';
 
-/// Unified calculation flow with PageView - calls separate page widgets
+/// Unified calculation flow with PageView - 7 pages total
 class CalculationFlowScreen extends StatefulWidget {
   const CalculationFlowScreen({super.key});
 
@@ -22,7 +23,7 @@ class _CalculationFlowScreenState extends State<CalculationFlowScreen>
   late PageController _pageController;
   late TabController _burnTabController;
   int _currentPage = 0;
-  final int _totalPages = 6;
+  final int _totalPages = 7;
 
   @override
   void initState() {
@@ -65,10 +66,12 @@ class _CalculationFlowScreenState extends State<CalculationFlowScreen>
       case 2:
         return 'Pilih Area Luka Bakar';
       case 3:
-        return 'Kebutuhan Cairan';
+        return 'Hasil Perhitungan';
       case 4:
-        return 'ABSI Score';
+        return 'Kebutuhan Cairan';
       case 5:
+        return 'ABSI Score';
+      case 6:
         return 'Hasil ABSI Score';
       default:
         return '';
@@ -79,7 +82,8 @@ class _CalculationFlowScreenState extends State<CalculationFlowScreen>
   Widget build(BuildContext context) {
     return Consumer<CalculationProvider>(
       builder: (context, provider, _) {
-        final showBackButton = _currentPage < 5;
+        // Hide back button on final result page
+        final showBackButton = _currentPage < 6;
 
         return Scaffold(
           backgroundColor: Colors.white,
@@ -127,6 +131,7 @@ class _CalculationFlowScreenState extends State<CalculationFlowScreen>
                 tabController: _burnTabController,
                 onNext: _nextPage,
               ),
+              ResultPage(onNext: _nextPage),
               ParklandPage(onNext: _nextPage),
               AbsiPage(onNext: _nextPage),
               const AbsiResultPage(),

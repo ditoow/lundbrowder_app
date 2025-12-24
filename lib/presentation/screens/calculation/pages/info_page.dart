@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/constants/app_colors.dart';
 
 /// Info Page - can be used directly in PageView
@@ -11,24 +12,21 @@ class InfoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // Step indicator
         Container(
           color: Colors.white,
-          padding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
-          child: _StepIndicator(currentStep: 2, totalSteps: 5),
+          padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 16.h),
+          child: _StepIndicator(currentStep: 2, totalSteps: 7),
         ),
-
         Expanded(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
+            padding: EdgeInsets.fromLTRB(24.w, 8.h, 24.w, 24.h),
             child: Column(
               children: [
-                // Main info card
                 Container(
-                  padding: const EdgeInsets.all(20),
+                  padding: EdgeInsets.all(20.r),
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(16.r),
                     border: Border.all(color: Colors.grey.shade200),
                     boxShadow: [
                       BoxShadow(
@@ -41,33 +39,33 @@ class InfoPage extends StatelessWidget {
                   child: Column(
                     children: [
                       Container(
-                        width: 72,
-                        height: 72,
+                        width: 72.r,
+                        height: 72.r,
                         decoration: BoxDecoration(
                           color: AppColors.primary.withAlpha(25),
                           shape: BoxShape.circle,
                         ),
-                        child: const Icon(
+                        child: Icon(
                           Icons.article_outlined,
-                          size: 36,
+                          size: 36.r,
                           color: AppColors.primary,
                         ),
                       ),
-                      const SizedBox(height: 20),
-                      const Text(
+                      SizedBox(height: 20.h),
+                      Text(
                         'Metode Lund & Browder',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 20.sp,
                           fontWeight: FontWeight.bold,
                           color: AppColors.textPrimary,
                         ),
                         textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 16),
+                      SizedBox(height: 16.h),
                       Text(
                         'Metode Lund & Browder adalah standar internasional untuk menghitung luas luka bakar dengan menyesuaikan persentase bagian tubuh berdasarkan usia pasien.',
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 15.sp,
                           color: AppColors.textSecondary,
                           height: 1.6,
                         ),
@@ -76,52 +74,52 @@ class InfoPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: 24.h),
                 _FeatureItem(
                   icon: Icons.check_circle,
                   iconColor: AppColors.severityRingan,
                   text: 'Lebih akurat dibanding Rule of Nines',
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12.h),
                 _FeatureItem(
                   icon: Icons.check_circle,
                   iconColor: AppColors.severityRingan,
                   text: 'Menyesuaikan proporsi tubuh berdasarkan usia',
                 ),
-                const SizedBox(height: 12),
+                SizedBox(height: 12.h),
                 _FeatureItem(
                   icon: Icons.check_circle,
                   iconColor: AppColors.severityRingan,
                   text: 'Standar internasional untuk estimasi luka bakar',
                 ),
-                const SizedBox(height: 24),
+                SizedBox(height: 24.h),
                 Container(
-                  padding: const EdgeInsets.all(16),
+                  padding: EdgeInsets.all(16.r),
                   decoration: BoxDecoration(
                     color: Colors.grey.shade50,
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.r),
                   ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        padding: const EdgeInsets.all(6),
+                        padding: EdgeInsets.all(6.r),
                         decoration: BoxDecoration(
                           color: AppColors.primary.withAlpha(25),
                           shape: BoxShape.circle,
                         ),
-                        child: const Icon(
+                        child: Icon(
                           Icons.info_outline,
                           color: AppColors.primary,
-                          size: 18,
+                          size: 18.r,
                         ),
                       ),
-                      const SizedBox(width: 12),
+                      SizedBox(width: 12.w),
                       Expanded(
                         child: Text(
                           'Pada langkah selanjutnya, Anda akan memilih area tubuh yang terkena luka bakar.',
                           style: TextStyle(
-                            fontSize: 14,
+                            fontSize: 14.sp,
                             color: AppColors.textSecondary,
                             height: 1.5,
                           ),
@@ -134,13 +132,11 @@ class InfoPage extends StatelessWidget {
             ),
           ),
         ),
-
-        // Bottom button
         Container(
-          padding: const EdgeInsets.all(24),
+          padding: EdgeInsets.all(24.r),
           child: SizedBox(
             width: double.infinity,
-            height: 56,
+            height: 56.h,
             child: ElevatedButton(
               onPressed: onNext,
               style: ElevatedButton.styleFrom(
@@ -148,18 +144,21 @@ class InfoPage extends StatelessWidget {
                 foregroundColor: Colors.white,
                 elevation: 0,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(12.r),
                 ),
               ),
-              child: const Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     'Lanjut',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                  SizedBox(width: 8),
-                  Icon(Icons.arrow_forward, size: 20),
+                  SizedBox(width: 8.w),
+                  Icon(Icons.arrow_forward, size: 20.r),
                 ],
               ),
             ),
@@ -185,21 +184,23 @@ class _StepIndicator extends StatelessWidget {
             final isActive = index < currentStep;
             return Expanded(
               child: Container(
-                height: 4,
-                margin: EdgeInsets.only(right: index < totalSteps - 1 ? 4 : 0),
+                height: 4.h,
+                margin: EdgeInsets.only(
+                  right: index < totalSteps - 1 ? 4.w : 0,
+                ),
                 decoration: BoxDecoration(
                   color: isActive ? AppColors.primary : Colors.grey.shade200,
-                  borderRadius: BorderRadius.circular(2),
+                  borderRadius: BorderRadius.circular(2.r),
                 ),
               ),
             );
           }),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         Text(
           'LANGKAH $currentStep DARI $totalSteps',
           style: TextStyle(
-            fontSize: 12,
+            fontSize: 12.sp,
             fontWeight: FontWeight.w500,
             color: AppColors.textSecondary,
             letterSpacing: 0.5,
@@ -224,23 +225,20 @@ class _FeatureItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: Colors.grey.shade200),
       ),
       child: Row(
         children: [
-          Icon(icon, color: iconColor, size: 22),
-          const SizedBox(width: 12),
+          Icon(icon, color: iconColor, size: 22.r),
+          SizedBox(width: 12.w),
           Expanded(
             child: Text(
               text,
-              style: const TextStyle(
-                fontSize: 14,
-                color: AppColors.textPrimary,
-              ),
+              style: TextStyle(fontSize: 14.sp, color: AppColors.textPrimary),
             ),
           ),
         ],

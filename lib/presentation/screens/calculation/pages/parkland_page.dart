@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/parkland_constants.dart';
@@ -44,25 +45,22 @@ class _ParklandPageState extends State<ParklandPage> {
       builder: (context, provider, _) {
         return Column(
           children: [
-            // Step indicator
             Container(
               color: Colors.white,
-              padding: const EdgeInsets.fromLTRB(24, 16, 24, 16),
-              child: _StepIndicator(currentStep: 4, totalSteps: 5),
+              padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 16.h),
+              child: _StepIndicator(currentStep: 5, totalSteps: 7),
             ),
-
             Expanded(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
+                padding: EdgeInsets.fromLTRB(24.w, 8.h, 24.w, 24.h),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Results card
                     Container(
-                      padding: const EdgeInsets.all(20),
+                      padding: EdgeInsets.all(20.r),
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(16.r),
                         border: Border.all(color: Colors.grey.shade200),
                         boxShadow: [
                           BoxShadow(
@@ -74,16 +72,16 @@ class _ParklandPageState extends State<ParklandPage> {
                       ),
                       child: Column(
                         children: [
-                          const Text(
+                          Text(
                             'TOTAL CAIRAN 24 JAM',
                             style: TextStyle(
-                              fontSize: 12,
+                              fontSize: 12.sp,
                               fontWeight: FontWeight.w600,
                               color: AppColors.textSecondary,
                               letterSpacing: 1,
                             ),
                           ),
-                          const SizedBox(height: 8),
+                          SizedBox(height: 8.h),
                           Text(
                             _hasCalculated
                                 ? ParklandFormula.formatVolume(
@@ -91,16 +89,16 @@ class _ParklandPageState extends State<ParklandPage> {
                                   )
                                 : '0 mL',
                             style: TextStyle(
-                              fontSize: 36,
+                              fontSize: 36.sp,
                               fontWeight: FontWeight.bold,
                               color: _hasCalculated
                                   ? AppColors.primary
                                   : Colors.grey.shade400,
                             ),
                           ),
-                          const SizedBox(height: 24),
+                          SizedBox(height: 24.h),
                           Divider(color: Colors.grey.shade200),
-                          const SizedBox(height: 16),
+                          SizedBox(height: 16.h),
                           _FluidRow(
                             icon: Icons.access_time,
                             iconColor: _hasCalculated
@@ -117,7 +115,7 @@ class _ParklandPageState extends State<ParklandPage> {
                                 ? '${ParklandFormula.getFirst8HoursRate(provider.totalFluid).toStringAsFixed(0)} mL/jam'
                                 : '0 mL/jam',
                           ),
-                          const SizedBox(height: 16),
+                          SizedBox(height: 16.h),
                           _FluidRow(
                             icon: Icons.access_time_filled,
                             iconColor: _hasCalculated
@@ -137,13 +135,12 @@ class _ParklandPageState extends State<ParklandPage> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 24),
-                    // TBSA display
+                    SizedBox(height: 24.h),
                     Container(
-                      padding: const EdgeInsets.all(16),
+                      padding: EdgeInsets.all(16.r),
                       decoration: BoxDecoration(
                         color: Colors.grey.shade50,
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(12.r),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -151,14 +148,14 @@ class _ParklandPageState extends State<ParklandPage> {
                           Text(
                             'Total TBSA',
                             style: TextStyle(
-                              fontSize: 14,
+                              fontSize: 14.sp,
                               color: AppColors.textSecondary,
                             ),
                           ),
                           Text(
                             '${provider.totalTBSA.toStringAsFixed(1)}%',
-                            style: const TextStyle(
-                              fontSize: 18,
+                            style: TextStyle(
+                              fontSize: 18.sp,
                               fontWeight: FontWeight.bold,
                               color: AppColors.primary,
                             ),
@@ -166,16 +163,16 @@ class _ParklandPageState extends State<ParklandPage> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    const Text(
+                    SizedBox(height: 20.h),
+                    Text(
                       'Berat Badan',
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w600,
                         color: AppColors.textPrimary,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     TextField(
                       controller: _weightController,
                       keyboardType: const TextInputType.numberWithOptions(
@@ -196,15 +193,15 @@ class _ParklandPageState extends State<ParklandPage> {
                         filled: true,
                         fillColor: Colors.grey.shade50,
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(12.r),
                           borderSide: BorderSide(color: Colors.grey.shade200),
                         ),
                         enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(12.r),
                           borderSide: BorderSide(color: Colors.grey.shade200),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(12.r),
                           borderSide: const BorderSide(
                             color: AppColors.primary,
                             width: 2,
@@ -212,12 +209,12 @@ class _ParklandPageState extends State<ParklandPage> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 24),
+                    SizedBox(height: 24.h),
                     Row(
                       children: [
                         Expanded(
                           child: SizedBox(
-                            height: 52,
+                            height: 52.h,
                             child: ElevatedButton(
                               onPressed: () => _calculate(provider),
                               style: ElevatedButton.styleFrom(
@@ -225,23 +222,23 @@ class _ParklandPageState extends State<ParklandPage> {
                                 foregroundColor: Colors.white,
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
+                                  borderRadius: BorderRadius.circular(12.r),
                                 ),
                               ),
-                              child: const Text(
+                              child: Text(
                                 'Hitung',
                                 style: TextStyle(
-                                  fontSize: 16,
+                                  fontSize: 16.sp,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ),
                           ),
                         ),
-                        const SizedBox(width: 12),
+                        SizedBox(width: 12.w),
                         Expanded(
                           child: SizedBox(
-                            height: 52,
+                            height: 52.h,
                             child: ElevatedButton(
                               onPressed: _hasCalculated ? widget.onNext : null,
                               style: ElevatedButton.styleFrom(
@@ -253,7 +250,7 @@ class _ParklandPageState extends State<ParklandPage> {
                                     : Colors.grey.shade500,
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
+                                  borderRadius: BorderRadius.circular(12.r),
                                 ),
                               ),
                               child: Row(
@@ -262,12 +259,12 @@ class _ParklandPageState extends State<ParklandPage> {
                                   Text(
                                     'Lanjut',
                                     style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 16.sp,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
-                                  const SizedBox(width: 4),
-                                  Icon(Icons.arrow_forward, size: 18),
+                                  SizedBox(width: 4.w),
+                                  Icon(Icons.arrow_forward, size: 18.r),
                                 ],
                               ),
                             ),
@@ -301,21 +298,23 @@ class _StepIndicator extends StatelessWidget {
             final isActive = index < currentStep;
             return Expanded(
               child: Container(
-                height: 4,
-                margin: EdgeInsets.only(right: index < totalSteps - 1 ? 4 : 0),
+                height: 4.h,
+                margin: EdgeInsets.only(
+                  right: index < totalSteps - 1 ? 4.w : 0,
+                ),
                 decoration: BoxDecoration(
                   color: isActive ? AppColors.primary : Colors.grey.shade200,
-                  borderRadius: BorderRadius.circular(2),
+                  borderRadius: BorderRadius.circular(2.r),
                 ),
               ),
             );
           }),
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         Text(
           'LANGKAH $currentStep DARI $totalSteps',
           style: TextStyle(
-            fontSize: 12,
+            fontSize: 12.sp,
             fontWeight: FontWeight.w500,
             color: AppColors.textSecondary,
             letterSpacing: 0.5,
@@ -346,31 +345,31 @@ class _FluidRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.r),
       decoration: BoxDecoration(
         color: iconColor.withAlpha(15),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
       ),
       child: Row(
         children: [
           Container(
-            width: 44,
-            height: 44,
+            width: 44.r,
+            height: 44.r,
             decoration: BoxDecoration(
               color: iconColor.withAlpha(30),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(10.r),
             ),
-            child: Icon(icon, color: iconColor, size: 22),
+            child: Icon(icon, color: iconColor, size: 22.r),
           ),
-          const SizedBox(width: 14),
+          SizedBox(width: 14.w),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
-                    fontSize: 14,
+                  style: TextStyle(
+                    fontSize: 14.sp,
                     fontWeight: FontWeight.w600,
                     color: AppColors.textPrimary,
                   ),
@@ -378,7 +377,7 @@ class _FluidRow extends StatelessWidget {
                 Text(
                   subtitle,
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize: 12.sp,
                     color: AppColors.textSecondary,
                   ),
                 ),
@@ -391,14 +390,17 @@ class _FluidRow extends StatelessWidget {
               Text(
                 value,
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 16.sp,
                   fontWeight: FontWeight.bold,
                   color: iconColor,
                 ),
               ),
               Text(
                 rate,
-                style: TextStyle(fontSize: 11, color: AppColors.textSecondary),
+                style: TextStyle(
+                  fontSize: 11.sp,
+                  color: AppColors.textSecondary,
+                ),
               ),
             ],
           ),

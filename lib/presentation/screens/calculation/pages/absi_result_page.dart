@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/absi_constants.dart';
@@ -34,15 +35,14 @@ class AbsiResultPage extends StatelessWidget {
         final riskColor = _getRiskColor(provider.riskLevel);
 
         return SingleChildScrollView(
-          padding: const EdgeInsets.all(24),
+          padding: EdgeInsets.all(24.r),
           child: Column(
             children: [
-              // Score result card
               Container(
-                padding: const EdgeInsets.all(24),
+                padding: EdgeInsets.all(24.r),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(16.r),
                   border: Border.all(color: Colors.grey.shade200),
                   boxShadow: [
                     BoxShadow(
@@ -54,108 +54,100 @@ class AbsiResultPage extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    // Total score
-                    const Text(
+                    Text(
                       'SKOR ABSI',
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 12.sp,
                         fontWeight: FontWeight.w600,
                         color: AppColors.textSecondary,
                         letterSpacing: 1,
                       ),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     Text(
                       '${provider.absiScore}',
                       style: TextStyle(
-                        fontSize: 64,
+                        fontSize: 64.sp,
                         fontWeight: FontWeight.bold,
                         color: riskColor,
                       ),
                     ),
-
-                    const SizedBox(height: 16),
-
-                    // Risk level badge
+                    SizedBox(height: 16.h),
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 24,
-                        vertical: 12,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 24.w,
+                        vertical: 12.h,
                       ),
                       decoration: BoxDecoration(
                         color: riskColor,
-                        borderRadius: BorderRadius.circular(24),
+                        borderRadius: BorderRadius.circular(24.r),
                       ),
                       child: Text(
                         'Risiko ${provider.riskLevel?.displayName ?? '-'}',
-                        style: const TextStyle(
-                          fontSize: 16,
+                        style: TextStyle(
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
                           color: Colors.white,
                         ),
                       ),
                     ),
-
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12.h),
                     Text(
                       'Probabilitas Kematian: ${provider.riskLevel?.mortalityRange ?? '-'}',
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 14.sp,
                         color: AppColors.textSecondary,
                       ),
                     ),
                   ],
                 ),
               ),
-
-              const SizedBox(height: 24),
-
-              // Score breakdown card
+              SizedBox(height: 24.h),
               Container(
-                padding: const EdgeInsets.all(20),
+                padding: EdgeInsets.all(20.r),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(16.r),
                   border: Border.all(color: Colors.grey.shade200),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    Text(
                       'Rincian Skor',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w600,
                         color: AppColors.textPrimary,
                       ),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16.h),
                     ...provider.getAbsiBreakdown().entries.map((entry) {
                       return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 6),
+                        padding: EdgeInsets.symmetric(vertical: 6.h),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               entry.key,
                               style: TextStyle(
-                                fontSize: 14,
+                                fontSize: 14.sp,
                                 color: AppColors.textSecondary,
                               ),
                             ),
                             Container(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 10,
-                                vertical: 4,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 10.w,
+                                vertical: 4.h,
                               ),
                               decoration: BoxDecoration(
                                 color: AppColors.primary.withAlpha(15),
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(8.r),
                               ),
                               child: Text(
                                 '+${entry.value}',
-                                style: const TextStyle(
-                                  fontSize: 14,
+                                style: TextStyle(
+                                  fontSize: 14.sp,
                                   fontWeight: FontWeight.w600,
                                   color: AppColors.primary,
                                 ),
@@ -165,16 +157,16 @@ class AbsiResultPage extends StatelessWidget {
                         ),
                       );
                     }),
-                    const SizedBox(height: 12),
+                    SizedBox(height: 12.h),
                     Divider(color: Colors.grey.shade200),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8.h),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text(
+                        Text(
                           'Total Skor',
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 16.sp,
                             fontWeight: FontWeight.bold,
                             color: AppColors.textPrimary,
                           ),
@@ -182,7 +174,7 @@ class AbsiResultPage extends StatelessWidget {
                         Text(
                           '${provider.absiScore}',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 18.sp,
                             fontWeight: FontWeight.bold,
                             color: riskColor,
                           ),
@@ -192,13 +184,10 @@ class AbsiResultPage extends StatelessWidget {
                   ],
                 ),
               ),
-
-              const SizedBox(height: 32),
-
-              // Finish button
+              SizedBox(height: 32.h),
               SizedBox(
                 width: double.infinity,
-                height: 56,
+                height: 56.h,
                 child: ElevatedButton(
                   onPressed: () {
                     provider.reset();
@@ -213,22 +202,22 @@ class AbsiResultPage extends StatelessWidget {
                     foregroundColor: Colors.white,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(12.r),
                     ),
                   ),
-                  child: const Text(
+                  child: Text(
                     'Selesai',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               ),
-
-              const SizedBox(height: 16),
-
-              // Secondary action - recalculate goes back to first page
+              SizedBox(height: 16.h),
               SizedBox(
                 width: double.infinity,
-                height: 52,
+                height: 52.h,
                 child: OutlinedButton.icon(
                   onPressed: () {
                     provider.reset();
@@ -238,13 +227,16 @@ class AbsiResultPage extends StatelessWidget {
                       ModalRoute.withName(AppRoutes.home),
                     );
                   },
-                  icon: const Icon(Icons.refresh, size: 18),
-                  label: const Text('Hitung Ulang'),
+                  icon: Icon(Icons.refresh, size: 18.r),
+                  label: Text(
+                    'Hitung Ulang',
+                    style: TextStyle(fontSize: 14.sp),
+                  ),
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.primary,
                     side: BorderSide(color: AppColors.primary),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(12.r),
                     ),
                   ),
                 ),
